@@ -32,3 +32,14 @@
   background: #cbe4f8;
   border: 5px solid #267abf;
 }
+.fighter-preview___infoContainer{
+  list-style-type:  none;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid #ca9650;
+  background: #ffdfa7;
+  padding: 15px 20px;
+}

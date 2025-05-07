@@ -11,3 +11,6 @@
 .fighter-preview___left {
   align-items: flex-start;
 }
+.fighter-preview___img{
+  height: 260px;
+}
