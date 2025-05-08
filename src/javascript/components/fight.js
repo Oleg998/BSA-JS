@@ -20,6 +20,18 @@ export function getDamage(attacker, defender) {
     return damage > 0 ? damage : 0;
 }
 
+function triggerHitEffect(position, hit) {
+    const positionClassName = position === 'right' ? 'arena___right-fighter' : 'arena___left-fighter';
+    const fighterElement = document.querySelector(`.${positionClassName}`);
+    if (fighterElement) {
+        const efect = hit === 'hit' ? 'hit-effect' : 'critical-effect';
+        fighterElement.classList.add(efect);
+        setTimeout(() => {
+            fighterElement.classList.remove(efect);
+        }, 300);
+    }
+}
+
 export async function fight(firstFighter, secondFighter) {
     return new Promise(resolve => {
         const firstBar = document.getElementById('left-fighter-indicator');
@@ -60,6 +72,7 @@ export async function fight(firstFighter, secondFighter) {
                 const damage = getDamage(firstFighter, secondFighter);
                 secondHealth -= damage;
                 updateHealthBar(secondBar, secondHealth, totalSecondHealth);
+                triggerHitEffect('right', 'hit');
                 checkEndFight();
                 setTimeout(() => (firstCanHit = true), 500);
             }
@@ -69,6 +82,7 @@ export async function fight(firstFighter, secondFighter) {
                 const damage = getDamage(secondFighter, firstFighter);
                 firstHealth -= damage;
                 updateHealthBar(firstBar, firstHealth, totalFirstHealth);
+                triggerHitEffect('left', 'hit');
                 checkEndFight();
                 setTimeout(() => (secondCanHit = true), 500);
             }
@@ -77,6 +91,7 @@ export async function fight(firstFighter, secondFighter) {
                 const damage = firstFighter.attack * 2;
                 secondHealth -= damage;
                 updateHealthBar(secondBar, secondHealth, totalSecondHealth);
+                triggerHitEffect('right', 'сritical');
                 checkEndFight();
                 firstCriticalReady = false;
                 setTimeout(() => {
@@ -88,6 +103,7 @@ export async function fight(firstFighter, secondFighter) {
                 const damage = secondFighter.attack * 2;
                 firstHealth -= damage;
                 updateHealthBar(firstBar, firstHealth, totalFirstHealth);
+                triggerHitEffect('left', 'сritical');
                 checkEndFight();
                 secondCriticalReady = false;
                 setTimeout(() => {
